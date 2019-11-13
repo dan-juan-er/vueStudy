@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<style type="text/css">
+			input {
+				width: 18px;
+			}
+
+			#one {
+				width: 300px;
+				height: 300px;
+				background-color: beige;
+				font-size: 50px;
+				text-align: center;
+				line-height: 300px;
+			}
+			#A,#B {
+				width: 300px;
+				height: 300px;
+				background-color: wheat;
+				font-size: 50px;
+				text-align: center;
+				line-height: 300px;
+			}
+			#B{
+				background-color: bisque;
+			}
+			.C {
+				width: 300px;
+				height: 300px;
+				background-color: wheat;
+				font-size: 50px;
+				text-align: center;
+				line-height: 300px;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="app">
+			<p v-text="msg"></p>
+			<p v-text="msg ? 'you' : 'me'"></p>
+			<p v-text="getA()"></p>
+			<button @click="changeMsg()">改变</button>
+			<!-- 此时输入框的内容绑定了数据源msg的值，所以默认显示hello，同时使用v-model将msg绑定了输入框的值，当输入框内容改变时，使用过msg的地方都会重新渲染 -->
+			<input v-model="msg" type="text" :value="msg" />
+			<hr>
+			<!-- 练习：商品的总价 -->
+			单价：<span v-text="price"></span><br>
+			数量：<button @click="count++">+</button><input type="text" :value="count" /><button @click="dece()">-</button><br>
+			总价：<span v-text="price*count"></span><br>
+			<!-- v-model指令 双向数据绑定，用来在Input（text password radio checkbox），select，textera等表单元素上双向数据绑定 -->
+			年龄：<select v-model="age">
+				<option value="20">20</option>
+				<option value="21">21</option>
+				<option value="22">22</option>
+				<option value="23">23</option>
+				<option value="24">24</option>
+				<option value="25">25</option>
+				<option value="26">26</option>
+			</select>
+			年龄：<span v-text="age"></span><br>
+
+			<input v-model="sex" type="radio" value="男" />男
+			<input v-model="sex" type="radio" value="女" />女
+			<p v-text="sex"></p>
+			<hr>
+			<!-- v-if 指令：用来根据表达式的结果 是否为真，决定是否插入该节点 -->
+			<button @click="see = ! see">显示/隐藏</button>
+			<p v-if="see" :id="ID">one</p>
+
+			<hr>
+			<button @click="choose = true">126</button>
+			<button @click="choose = false">163</button>
+			
+			<!-- v-if v-else -->
+			<!-- 作为一个临时容器 相当于div -->
+			<template v-if="choose">
+				<div id="A">126邮箱</div>
+			</template>
+			<template v-else>
+				<div id="B">163邮箱</div>
+			</template>
+			<!-- v-if v-else-if v-else -->
+			<button @click="page = 1">男装</button>
+			<button @click="page = 2">女装</button>
+			<button @click="page = 3">童装</button>
+			<button @click="page = 4">韩装</button>
+			<div v-if="page == 1" class="C">男装</div>
+			<div v-else-if="page == 2" class="C">女装</div>
+			<div v-else-if="page == 3" class="C">童装</div>
+			<div v-else-if="page == 4" class="C">韩装</div>
+			<!-- v-show 和 v-if 使用判断是否插入节点，功能一样；v-show更高效，确保属性值在发生改变时，每次都会重新渲染ki -->
+ 		</div>
+	</body>
+	<script src="js/vue.min.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+		var ve = new Vue({
+			el: "#app",
+			data: {
+				msg: "hello",
+				count: 1,
+				price: 9,
+				age: 20,
+				sex: "男",
+				ID: "one",
+				see: true,
+				choose:true,
+				page:1
+			},
+			methods: {
+				getA() {
+					return "hi";
+				},
+				changeMsg() {
+					this.msg = 0;
+				},
+				dece() {
+					this.count--;
+					if (this.count <= 0) {
+						this.count = 0;
+					}
+				}
+			}
+		});
+	</script>
+</html>

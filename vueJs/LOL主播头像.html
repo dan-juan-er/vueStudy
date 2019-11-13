@@ -1,0 +1,1093 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<style type="text/css">
+			ul {
+				list-style-type: none;
+				
+			}
+
+			li {
+				border: 1px solid black;
+				float: left;
+				width: 20%;
+				height: 350px;
+				box-sizing: border-box;
+			}
+			li img{
+				width: 100%;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="wrap">
+			<ul>
+				<li v-for="(v,i) in msgs.authors">
+					<img :src="v.icon" >
+					<span v-text="v.name"></span>
+					<button @click="del(i)">删除</button>
+				</li>
+			</ul>
+		</div>
+	</body>
+	<script src="js/vue.min.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+		var msg = {
+			"authors": [{
+					"watchable": false,
+					"name": "最近更新",
+					"youku_id": "none",
+					"url": "http://dotaly.com",
+					"detail": "2019-09-20",
+					"id": "all",
+					"pop": -1,
+					"icon": "http://api.dotaly.com/icon/lol_icon.png"
+				},
+				{
+					"watchable": false,
+					"name": "热门视频",
+					"youku_id": "none",
+					"url": "http://dotaly.com",
+					"detail": "2019-09-20",
+					"id": "hot",
+					"pop": -1,
+					"icon": "http://api.dotaly.com/icon/avatar-hot.png"
+				},
+				{
+					"watchable": true,
+					"name": "Miss",
+					"youku_id": "UMzk2ODA1OTY4",
+					"url": "http://i.youku.com/u/UMzk2ODA1OTY4/videos",
+					"detail": "2019-09-20",
+					"id": "miss",
+					"pop": 3,
+					"icon": "http://tp2.sinaimg.cn/1371731565/180/5685564388/0"
+				},
+				{
+					"watchable": true,
+					"name": "老斯讲堂",
+					"youku_id": "UMTcyNDM5NDI0NA",
+					"url": "http://i.youku.com/u/UMTcyNDM5NDI0NA/videos",
+					"detail": "2019-09-20",
+					"id": "laosi",
+					"pop": 18,
+					"icon": "http://g2.ykimg.com/0130391F485576C75957A519B20AC1A17ECA1D-4E47-79DB-A482-40DF9C0FB553"
+				},
+				{
+					"watchable": true,
+					"name": "小鱼解说",
+					"youku_id": "UMTcwODkxNDQ2NA",
+					"url": "http://i.youku.com/u/UMTcwODkxNDQ2NA/videos",
+					"detail": "2019-09-20",
+					"id": "xiaoyu",
+					"pop": 32,
+					"icon": "http://g2.ykimg.com/0130391F485466F7DD66A91976FDC8B17ED5FA-C8E0-71AD-A23E-EB40FBDDA185"
+				},
+				{
+					"watchable": true,
+					"name": "拳师七号",
+					"youku_id": "UNzg2MTczNzI",
+					"url": "http://i.youku.com/u/UNzg2MTczNzI/videos",
+					"detail": "2019-09-19",
+					"id": "qihao",
+					"pop": 4,
+					"icon": "http://tp4.sinaimg.cn/2202754247/180/5604327607/1"
+				},
+				{
+					"watchable": true,
+					"name": "YD",
+					"youku_id": "UNDQ2NTU1MDA",
+					"url": "http://i.youku.com/u/UNDQ2NTU1MDA/videos",
+					"detail": "2019-09-19",
+					"id": "yd",
+					"pop": 6,
+					"icon": "http://g4.ykimg.com/0130391F4553A788E7AF1A00AA58E3DA72DE51-3E95-5EF7-4CB3-0E0DB00117A0"
+				},
+				{
+					"watchable": true,
+					"name": "超神解说",
+					"youku_id": "UMTM3OTEyODgxMg",
+					"url": "http://i.youku.com/u/UMTM3OTEyODgxMg/videos",
+					"detail": "2019-09-19",
+					"id": "chaoshen",
+					"pop": 13,
+					"icon": "http://g4.ykimg.com/0130391F4552D28A772105148CF57BB03BF71E-D29B-2C49-FDC7-6D0596CE30EC"
+				},
+				{
+					"watchable": true,
+					"name": "SilenceOB",
+					"youku_id": "UMTQxMzk3NTE4NA",
+					"url": "http://i.youku.com/u/UMTQxMzk3NTE4NA/videos",
+					"detail": "2019-09-19",
+					"id": "silenceob",
+					"pop": 30,
+					"icon": "http://g1.ykimg.com/0130391F4553024210A7841511E3247850B803-7781-7B02-4A11-351B23BD4585"
+				},
+				{
+					"watchable": true,
+					"name": "起小点",
+					"youku_id": "UMjYwMzE0NzMy",
+					"url": "http://i.youku.com/u/UMjYwMzE0NzMy/videos",
+					"detail": "2019-09-18",
+					"id": "qixiaodiain",
+					"pop": 5,
+					"icon": "http://tva4.sinaimg.cn/crop.0.0.512.512.180/70ca4b4ejw8fctisajlwrj20e80e8mxp.jpg"
+				},
+				{
+					"watchable": true,
+					"name": "徐老师来巡山",
+					"youku_id": "UMTA1NTY0Njg",
+					"url": "http://i.youku.com/u/UMTA1NTY0Njg/videos",
+					"detail": "2019-09-18",
+					"id": "xls",
+					"pop": 11,
+					"icon": "http://g4.ykimg.com/0130391F4854EE77F7BE870028450DB1D3609E-0D8E-A1BB-AC39-DBD411BAFDBD"
+				},
+				{
+					"watchable": true,
+					"name": "江湖人称一条柴",
+					"youku_id": "UMTgyMTQ0MjY0MA",
+					"url": "http://i.youku.com/u/UMTgyMTQ0MjY0MA/videos",
+					"detail": "2019-09-18",
+					"id": "yitiaochai",
+					"pop": 12,
+					"icon": "https://image.uc.cn/o/wemedia/s/upload/17052214253f6dc299f1e24adf8d8abfeb658e84f6"
+				},
+				{
+					"watchable": true,
+					"name": "原凉",
+					"youku_id": "UMTMxNzE5MTQxNg",
+					"url": "http://i.youku.com/u/UMTMxNzE5MTQxNg/videos",
+					"detail": "2019-09-18",
+					"id": "yuanliang",
+					"pop": 20,
+					"icon": "http://g2.ykimg.com/0130391F4552961809315213A0AFBE68BC74F1-D702-BEEA-5B0D-9F8F109DEB88"
+				},
+				{
+					"watchable": true,
+					"name": "芜湖大司马1",
+					"youku_id": "UMTMwMjY3NTU4NA",
+					"url": "http://i.youku.com/u/UMTMwMjY3NTU4NA/videos",
+					"detail": "2019-09-18",
+					"id": "dasima",
+					"pop": 33,
+					"icon": "http://g1.ykimg.com/0130391F4855F152CC119713695020F8C4EF35-320D-B815-FD3D-CEC00A130980"
+				},
+				{
+					"watchable": true,
+					"name": "聚印象",
+					"youku_id": "UMTQ2MjAzMzgxMg",
+					"url": "http://i.youku.com/u/UMTQ2MjAzMzgxMg/videos",
+					"detail": "2019-09-18",
+					"id": "juyx",
+					"pop": 40,
+					"icon": "http://tp3.sinaimg.cn/3955284302/180/40064804125/1"
+				},
+				{
+					"watchable": true,
+					"name": "EDG官方",
+					"youku_id": "UMTcyNjQ4NjAyOA",
+					"url": "http://i.youku.com/u/UMTcyNjQ4NjAyOA/videos",
+					"detail": "2019-09-14",
+					"id": "edg",
+					"pop": 10,
+					"icon": "https://image.uc.cn/o/wemedia/s/upload/1705221414e91fb064b8390d0f7363e8cfbb6d462b"
+				},
+				{
+					"watchable": true,
+					"name": "小北",
+					"youku_id": "UMzkxMDU2NDY0",
+					"url": "http://i.youku.com/u/UMzkxMDU2NDY0/videos",
+					"detail": "2019-09-13",
+					"id": "xiaobei",
+					"pop": 11,
+					"icon": "http://tp3.sinaimg.cn/2342733542/180/5681642585/1"
+				},
+				{
+					"watchable": true,
+					"name": "旧梦",
+					"youku_id": "UMTI5MDA3NDQ2OA",
+					"url": "http://i.youku.com/u/UMTI5MDA3NDQ2OA/videos",
+					"detail": "2019-09-13",
+					"id": "jiumeng",
+					"pop": 50,
+					"icon": "http://g1.ykimg.com/0130391F48570FA5E059AA13393E59E26F0F5A-A238-5639-4BA9-824DBC170F0E"
+				},
+				{
+					"watchable": true,
+					"name": "小苍",
+					"youku_id": "UMzY1NTQ1NTc2",
+					"url": "http://i.youku.com/u/UMzY1NTQ1NTc2/videos",
+					"detail": "2019-09-07",
+					"id": "xiaocang",
+					"pop": 1,
+					"icon": "http://p2.sinaimg.cn/1236758953/180/00971315109325"
+				},
+				{
+					"watchable": true,
+					"name": "小漠",
+					"youku_id": "UMzQ1NDU3MjA4",
+					"url": "http://i.youku.com/u/UMzQ1NDU3MjA4/videos",
+					"detail": "2019-09-07",
+					"id": "xiaomo",
+					"pop": 3,
+					"icon": "http://t2.qlogo.cn/mbloghead/bcd934df4c007bab6e5e/180"
+				},
+				{
+					"watchable": true,
+					"name": "战旗全明星",
+					"youku_id": "UMTc3MDAxMjU5Mg",
+					"url": "http://i.youku.com/u/UMTc3MDAxMjU5Mg/videos",
+					"detail": "2019-09-04",
+					"id": "zhanqi",
+					"pop": 22,
+					"icon": "http://tp1.sinaimg.cn/5139796116/180/40087411802/0"
+				},
+				{
+					"watchable": true,
+					"name": "Klaus瞎",
+					"youku_id": "UMzEzODA1NTEyMA",
+					"url": "http://i.youku.com/u/UMzEzODA1NTEyMA/videos",
+					"detail": "2019-09-04",
+					"id": "chaoren",
+					"pop": 28,
+					"icon": "http://g4.ykimg.com/0130391F4556050B9B521A2EC2BAF44CDBF44A-024B-3B3E-7EBA-637620ADB94F"
+				},
+				{
+					"watchable": true,
+					"name": "阿怡",
+					"youku_id": "UNTg1MjU3Mzc2",
+					"url": "http://i.youku.com/u/UNTg1MjU3Mzc2/videos",
+					"detail": "2019-09-02",
+					"id": "ayi",
+					"pop": 8,
+					"icon": "http://g2.ykimg.com/0130391F4556D879ED657408B89468A19935A4-A7BA-A87C-743E-C29271130E39"
+				},
+				{
+					"watchable": true,
+					"name": "长歌是大腿",
+					"youku_id": "UMTg4OTA0NzgwOA",
+					"url": "http://i.youku.com/u/UMTg4OTA0NzgwOA/videos",
+					"detail": "2019-08-29",
+					"id": "changge",
+					"pop": 8,
+					"icon": "https://r1.ykimg.com/05FF0D0157AEB91C642025429EEB6C45"
+				},
+				{
+					"watchable": true,
+					"name": "Yuki酱丶",
+					"youku_id": "UNDQ2Mjc0NTI4",
+					"url": "http://i.youku.com/u/UNDQ2Mjc0NTI4/videos",
+					"detail": "2019-08-26",
+					"id": "yuki",
+					"pop": 7,
+					"icon": "http://tp2.sinaimg.cn/1961807365/180/40002405583/0"
+				},
+				{
+					"watchable": true,
+					"name": "蛋蛋",
+					"youku_id": "UMjE5MDU5Nzgw",
+					"url": "http://i.youku.com/u/UMjE5MDU5Nzgw/videos",
+					"detail": "2019-08-11",
+					"id": "dandan",
+					"pop": 21,
+					"icon": "http://g2.ykimg.com/0130391F4555372CCD59330343A591F774B4A0-AB73-A2F8-D713-8E584C9F84E1"
+				},
+				{
+					"watchable": true,
+					"name": "Misaya若风",
+					"youku_id": "UMzQ3MTUxNTAw",
+					"url": "http://i.youku.com/u/UMzQ3MTUxNTAw/videos",
+					"detail": "2019-07-24",
+					"id": "ruofeng",
+					"pop": 3,
+					"icon": "http://tva2.sinaimg.cn/crop.0.0.1242.1242.180/43fb79c1jw8f0lxmafskvj20yi0yiq5x.jpg"
+				},
+				{
+					"watchable": true,
+					"name": "小智",
+					"youku_id": "UMzU3MjkzOTI0",
+					"url": "http://i.youku.com/u/UMzU3MjkzOTI0/videos",
+					"detail": "2019-07-19",
+					"id": "xiaozhi",
+					"pop": 0,
+					"icon": "http://tp2.sinaimg.cn/3198568973/180/5667829117/1"
+				},
+				{
+					"watchable": true,
+					"name": "诅咒",
+					"youku_id": "UNDQxMTk2MjQ4",
+					"url": "http://i.youku.com/u/UNDQxMTk2MjQ4/videos",
+					"detail": "2019-07-18",
+					"id": "zuzhou",
+					"pop": 10,
+					"icon": "http://g2.ykimg.com/0130391F45533BB645B828069307B6CF3F4CC4-61FE-486C-E307-FE94DFD6A8B4"
+				},
+				{
+					"watchable": true,
+					"name": "枪炮Agito",
+					"youku_id": "UMzYzMzA4NDA0",
+					"url": "http://i.youku.com/u/UMzYzMzA4NDA0/videos",
+					"detail": "2019-06-27",
+					"id": "qiangpao",
+					"pop": 12,
+					"icon": "http://g3.ykimg.com/0130391F484E49FCA69C500569E95D2B06046F-FF48-6BB8-365F-08347C6945FC"
+				},
+				{
+					"watchable": true,
+					"name": "GN视界",
+					"youku_id": "UNDUzMTUzMjA4",
+					"url": "http://i.youku.com/u/UNDUzMTUzMjA4/videos",
+					"detail": "2019-06-25",
+					"id": "gnsj",
+					"pop": 50,
+					"icon": "http://g2.ykimg.com/0130391F4556445799915306C0A46E5E1B5763-5754-0D91-72D5-96BEEE5BAE6E"
+				},
+				{
+					"watchable": true,
+					"name": "溪子KS",
+					"youku_id": "UNjEzMTA3ODI0",
+					"url": "http://i.youku.com/u/UNjEzMTA3ODI0/videos",
+					"detail": "2019-06-22",
+					"id": "xizi",
+					"pop": 6,
+					"icon": "http://t0.qlogo.cn/mbloghead/d16fb57b9e41d984f5b2/180"
+				},
+				{
+					"watchable": true,
+					"name": "安静苦笑",
+					"youku_id": "UMjI5NTE5NDcy",
+					"url": "http://i.youku.com/u/UMjI5NTE5NDcy/videos",
+					"detail": "2019-05-22",
+					"id": "anjingkuxiao",
+					"pop": 15,
+					"icon": "http://g3.ykimg.com/0130391F45535716B2A881036B8C1C69C3424A-4489-3B58-CAEA-9EEF10ED8C61"
+				},
+				{
+					"watchable": true,
+					"name": "信一解说",
+					"youku_id": "UMjgzMjA4Njk2",
+					"url": "http://i.youku.com/u/UMjgzMjA4Njk2/videos",
+					"detail": "2019-05-12",
+					"id": "xinyi",
+					"pop": 31,
+					"icon": "http://tp4.sinaimg.cn/1916228463/180/5707879591/1"
+				},
+				{
+					"watchable": true,
+					"name": "Riot赛事",
+					"youku_id": "UMzI5NTUwODMyNA",
+					"url": "http://i.youku.com/u/UMzI5NTUwODMyNA/videos",
+					"detail": "2019-05-03",
+					"id": "match",
+					"pop": 5,
+					"icon": "https://image.uc.cn/o/wemedia/s/upload/1705221559646e05c68ea02357e29115f922ba0dfd"
+				},
+				{
+					"watchable": true,
+					"name": "Reto解说",
+					"youku_id": "UMTgyNjcwNDky",
+					"url": "http://i.youku.com/u/UMTgyNjcwNDky/videos",
+					"detail": "2019-03-02",
+					"id": "reto",
+					"pop": 45,
+					"icon": "https://r1.ykimg.com/0130391F45571BAD02CCDF02B8D527C012E878-073B-8E7E-A05A-1E323AE63566"
+				},
+				{
+					"watchable": true,
+					"name": "子尧解说",
+					"youku_id": "UMzM0MjEwMjAyMA",
+					"url": "http://i.youku.com/u/UMzM0MjEwMjAyMA/videos",
+					"detail": "2019-02-13",
+					"id": "ziyao",
+					"pop": 41,
+					"icon": "http://static.youku.com/user/img/avatar/310/12.jpg"
+				},
+				{
+					"watchable": true,
+					"name": "RIOT拳头中国",
+					"youku_id": "UMjgzNjU1MTQ4MA",
+					"url": "http://i.youku.com/u/UMjgzNjU1MTQ4MA/videos",
+					"detail": "2019-02-02",
+					"id": "riot",
+					"pop": 4,
+					"icon": "http://g2.ykimg.com/0130391F4554B77B95C3F72A4495CE8BC13B86-687F-37B7-0534-B60C61856E09"
+				},
+				{
+					"watchable": true,
+					"name": "联盟TV",
+					"youku_id": "UNTk4MjUyNjc3Mg",
+					"url": "http://i.youku.com/u/UNTk4MjUyNjc3Mg/videos",
+					"detail": "2019-01-26",
+					"id": "lmtv",
+					"pop": 15,
+					"icon": "https://image.uc.cn/o/wemedia/s/upload/2018/5214309e667da3b7e59f3cdaaaae0952x200x200x18.png"
+				},
+				{
+					"watchable": true,
+					"name": "SKTT1-China",
+					"youku_id": "UNDk3NzUxOTE2OA",
+					"url": "http://i.youku.com/u/UNDk3NzUxOTE2OA/videos",
+					"detail": "2019-01-26",
+					"id": "skt",
+					"pop": 18,
+					"icon": "https://image.uc.cn/o/wemedia/s/upload/2017/3cfb4e9f6139fe1eb44126c231cd9707x200x200x15.png"
+				},
+				{
+					"watchable": true,
+					"name": "FallenAngel",
+					"youku_id": "UNTA0NjQ1OTcy",
+					"url": "http://i.youku.com/u/UNTA0NjQ1OTcy/videos",
+					"detail": "2019-01-25",
+					"id": "fallen",
+					"pop": 46,
+					"icon": "http://tp2.sinaimg.cn/3044791337/180/40100899488/0"
+				},
+				{
+					"watchable": true,
+					"name": "阿灼",
+					"youku_id": "UMzA1NDIxNzI2NA",
+					"url": "http://i.youku.com/u/UMzA1NDIxNzI2NA/videos",
+					"detail": "2019-01-24",
+					"id": "azhuo",
+					"pop": 20,
+					"icon": "http://tva3.sinaimg.cn/crop.108.94.345.345.180/0068HWpigw1f82rqepv6uj30fb0fat96.jpg"
+				},
+				{
+					"watchable": true,
+					"name": "天策",
+					"youku_id": "UMjE2NjAwODc2",
+					"url": "http://i.youku.com/u/UMjE2NjAwODc2/videos",
+					"detail": "2019-01-19",
+					"id": "tiance",
+					"pop": 15,
+					"icon": "http://tp3.sinaimg.cn/3567364942/180/5727867709/1"
+				},
+				{
+					"watchable": true,
+					"name": "JY",
+					"youku_id": "UMzA2MDg3Njc2",
+					"url": "http://i.youku.com/u/UMzA2MDg3Njc2/videos",
+					"detail": "2019-01-09",
+					"id": "jy",
+					"pop": 2,
+					"icon": "http://tvax2.sinaimg.cn/crop.142.0.239.239.180/7bf22c2ely8feysauber7j20et0bq0wq.jpg"
+				},
+				{
+					"watchable": true,
+					"name": "辣椒酱",
+					"youku_id": "UMzMwOTg2NzY4OA",
+					"url": "http://i.youku.com/u/UMzMwOTg2NzY4OA/videos",
+					"detail": "2019-01-03",
+					"id": "lajiao",
+					"pop": 42,
+					"icon": "http://tp3.sinaimg.cn/1378406982/180/1297828122/1"
+				},
+				{
+					"watchable": true,
+					"name": "Numen丶",
+					"youku_id": "UMTM2MjU5MDg2OA",
+					"url": "http://i.youku.com/u/UMTM2MjU5MDg2OA/videos",
+					"detail": "2018-11-01",
+					"id": "numen",
+					"pop": 14,
+					"icon": "http://g1.ykimg.com/0130391F4552B95E6499C1144DDF25BF05EB16-0166-0B7C-141B-7885BB4A1989"
+				},
+				{
+					"watchable": true,
+					"name": "EMP解说",
+					"youku_id": "UMTY2NDIwNjY1Ng",
+					"url": "http://i.youku.com/u/UMTY2NDIwNjY1Ng/videos",
+					"detail": "2018-10-28",
+					"id": "emp",
+					"pop": -1,
+					"icon": "http://g2.ykimg.com/0130391F45558F0DFD71D518CC71D0CFA8FD83-9577-AE72-58AA-8ABCB02C3B1D"
+				},
+				{
+					"watchable": true,
+					"name": "峰峰侠",
+					"youku_id": "UNTkwODc1NDA",
+					"url": "http://i.youku.com/u/UNTkwODc1NDA/videos",
+					"detail": "2018-10-27",
+					"id": "ffx",
+					"pop": 12,
+					"icon": "http://g1.ykimg.com/0130391F45554B96BCF91800E166AD22709355-4C89-F1F3-EB74-8A820D71855B"
+				},
+				{
+					"watchable": true,
+					"name": "纱布德",
+					"youku_id": "UNjI2NTcxODI0",
+					"url": "http://i.youku.com/u/UNjI2NTcxODI0/videos",
+					"detail": "2018-09-29",
+					"id": "shabude",
+					"pop": 51,
+					"icon": "http://tp2.sinaimg.cn/1916862525/180/5721392854/1"
+				},
+				{
+					"watchable": true,
+					"name": "德玛西亚集锦",
+					"youku_id": "UNTk0MDg3NTIw",
+					"url": "http://i.youku.com/u/UNTk0MDg3NTIw/videos",
+					"detail": "2018-08-29",
+					"id": "demaxiya",
+					"pop": 101,
+					"icon": "http://tp4.sinaimg.cn/3194056735/180/40021673800/1"
+				},
+				{
+					"watchable": true,
+					"name": "小楼",
+					"youku_id": "UMTY3MDMzNjI0",
+					"url": "http://i.youku.com/u/UMTY3MDMzNjI0/videos",
+					"detail": "2018-08-07",
+					"id": "xiaolou",
+					"pop": 7,
+					"icon": "http://tp2.sinaimg.cn/2721185633/180/39998796483/0"
+				},
+				{
+					"watchable": true,
+					"name": "恶魔LOL",
+					"youku_id": "UMTM2NDI5NDA3Mg",
+					"url": "http://i.youku.com/u/UMTM2NDI5NDA3Mg/videos",
+					"detail": "2018-07-05",
+					"id": "emolol",
+					"pop": 47,
+					"icon": "http://g3.ykimg.com/0130391F4856489D6EE0ED14545E6E581EDF04-DAF5-444C-1FDC-CB5EEDE23DCF"
+				},
+				{
+					"watchable": true,
+					"name": "冰冷之海",
+					"youku_id": "UNjU3NDEwNDg",
+					"url": "http://i.youku.com/u/UNjU3NDEwNDg/videos",
+					"detail": "2018-07-02",
+					"id": "bingleng",
+					"pop": 53,
+					"icon": "http://tp4.sinaimg.cn/2012518187/180/5631179135/1"
+				},
+				{
+					"watchable": true,
+					"name": "教_主",
+					"youku_id": "UNTE0MjQyODM2",
+					"url": "http://i.youku.com/u/UNTE0MjQyODM2/videos",
+					"detail": "2018-07-01",
+					"id": "jiaozhu",
+					"pop": 6,
+					"icon": "http://g3.ykimg.com/0130391F455610EA8A9B4E07A9AE450E678903-A378-59D5-8437-CF4B41AB36CC"
+				},
+				{
+					"watchable": true,
+					"name": "三眼、",
+					"youku_id": "UMzUwMzI3NjQw",
+					"url": "http://i.youku.com/u/UMzUwMzI3NjQw/videos",
+					"detail": "2018-06-22",
+					"id": "sanyan",
+					"pop": 16,
+					"icon": "http://g2.ykimg.com/0130391F484DCF8C1DD29D053864D668BDEE3F-79D0-B21C-ED02-001368B130E3"
+				},
+				{
+					"watchable": true,
+					"name": "兔子解说",
+					"youku_id": "UMTM3NzUwMTgyOA",
+					"url": "http://i.youku.com/u/UMTM3NzUwMTgyOA/videos",
+					"detail": "2018-05-25",
+					"id": "tuzi",
+					"pop": 15,
+					"icon": "https://r1.ykimg.com/0130391F455469738686931486C0A1759D142E-12D9-F1F1-943C-770A37B6FBCC"
+				},
+				{
+					"watchable": true,
+					"name": "朵朵",
+					"youku_id": "UMzk3MTA2NzYw",
+					"url": "http://i.youku.com/u/UMzk3MTA2NzYw/videos",
+					"detail": "2018-05-22",
+					"id": "duoduo",
+					"pop": 20,
+					"icon": "http://t0.qlogo.cn/mbloghead/87798ee58a17491a4146/180"
+				},
+				{
+					"watchable": true,
+					"name": "McGRADY周文龙",
+					"youku_id": "UNjA1NDI3OTY",
+					"url": "http://i.youku.com/u/UNjA1NDI3OTY/videos",
+					"detail": "2018-05-19",
+					"id": "zhouwlong",
+					"pop": 38,
+					"icon": "http://g3.ykimg.com/0130391F45567FB1529D0F00E6F3D368A2C1CF-7082-6E80-CCC5-EA2DEF7110CE"
+				},
+				{
+					"watchable": true,
+					"name": "拳头lol解说",
+					"youku_id": "UNjIxNjQzMDI4",
+					"url": "http://i.youku.com/u/UNjIxNjQzMDI4/videos",
+					"detail": "2018-04-07",
+					"id": "quantou",
+					"pop": 12,
+					"icon": "http://g3.ykimg.com/0130391F4551F4954A9BB109436145DB089401-8BFA-0FFB-8576-998440454122"
+				},
+				{
+					"watchable": true,
+					"name": "预言解说",
+					"youku_id": "UMjk0NTMyMTExNg",
+					"url": "http://i.youku.com/u/UMjk0NTMyMTExNg/videos",
+					"detail": "2018-02-28",
+					"id": "gyw",
+					"pop": 42,
+					"icon": "http://g3.ykimg.com/0130391F4556755E964CF22BE38227B810FEAF-1018-1B4F-EDF8-E1F6B52F7F69"
+				},
+				{
+					"watchable": true,
+					"name": "TeamWe",
+					"youku_id": "UMzIwNjI4MTk2",
+					"url": "http://i.youku.com/u/UMzIwNjI4MTk2/videos",
+					"detail": "2018-01-26",
+					"id": "teamwe",
+					"pop": 6,
+					"icon": "http://t1.qlogo.cn/mbloghead/f5cc3c94d8be59e00a42/180"
+				},
+				{
+					"watchable": true,
+					"name": "Mint李静媛",
+					"youku_id": "UMTk2MDU3MTU2",
+					"url": "http://i.youku.com/u/UMTk2MDU3MTU2/videos",
+					"detail": "2018-01-23",
+					"id": "mint",
+					"pop": 10,
+					"icon": "http://tva2.sinaimg.cn/crop.0.0.180.180.50/8119769ejw1e8qgp5bmzyj2050050aa8.jpg"
+				},
+				{
+					"watchable": true,
+					"name": "小树",
+					"youku_id": "UMjUyNDU5ODY4",
+					"url": "http://i.youku.com/u/UMjUyNDU5ODY4/videos",
+					"detail": "2018-01-20",
+					"id": "xiaoshu",
+					"pop": 40,
+					"icon": "http://tp1.sinaimg.cn/1761314500/180/5752086867/1"
+				},
+				{
+					"watchable": true,
+					"name": "辛巴达",
+					"youku_id": "UMjk3MDc4MDY4",
+					"url": "http://i.youku.com/u/UMjk3MDc4MDY4/videos",
+					"detail": "2018-01-20",
+					"id": "xinbada",
+					"pop": 50,
+					"icon": "https://r1.ykimg.com/0130391F45557B75359A39046D434D2E93B694-C177-6A73-D086-DCB52ACE494D"
+				},
+				{
+					"watchable": true,
+					"name": "布姆",
+					"youku_id": "UMTQ4NzMyMjA0OA",
+					"url": "http://i.youku.com/u/UMTQ4NzMyMjA0OA/videos",
+					"detail": "2018-01-18",
+					"id": "bumu",
+					"pop": 19,
+					"icon": "http://g1.ykimg.com/0130391F48549C07A821EA1629AEF05E327C8A-DBA2-C71F-7652-AFA613E80695"
+				},
+				{
+					"watchable": true,
+					"name": "小数点",
+					"youku_id": "UMTk0NDY0ODA5Mg",
+					"url": "http://i.youku.com/u/UMTk0NDY0ODA5Mg/videos",
+					"detail": "2018-01-14",
+					"id": "xiaoshudian",
+					"pop": 11,
+					"icon": "http://tva3.sinaimg.cn/crop.20.5.228.228.180/005TBO4ajw8ex7jhsier1j307q07aq31.jpg"
+				},
+				{
+					"watchable": true,
+					"name": "伊芙蕾雅",
+					"youku_id": "UNTUyNDMyODQ0",
+					"url": "http://i.youku.com/u/UNTUyNDMyODQ0/videos",
+					"detail": "2018-01-13",
+					"id": "yfly",
+					"pop": 4,
+					"icon": "http://tp1.sinaimg.cn/3221102132/180/40032971901/0"
+				},
+				{
+					"watchable": true,
+					"name": "GGwpTV",
+					"youku_id": "UNjIwMzM0MDU2",
+					"url": "http://i.youku.com/u/UNjIwMzM0MDU2/videos",
+					"detail": "2017-10-22",
+					"id": "ggwptv",
+					"pop": 10,
+					"icon": "https://r1.ykimg.com/0130391F45576BCB93EFD5093E62FAC97CA095-5995-6B88-0AD2-C44B4E29416D"
+				},
+				{
+					"watchable": true,
+					"name": "虎牙Dopa",
+					"youku_id": "UMzI1Mzg4NDkwNA",
+					"url": "http://i.youku.com/u/UMzI1Mzg4NDkwNA/videos",
+					"detail": "2017-09-27",
+					"id": "dopa",
+					"pop": 39,
+					"icon": "http://tp1.sinaimg.cn/5343518064/180/40071643713/1"
+				},
+				{
+					"watchable": true,
+					"name": "小东是个好青年",
+					"youku_id": "UNjk1MTczNg",
+					"url": "http://i.youku.com/u/UNjk1MTczNg/videos",
+					"detail": "2017-09-24",
+					"id": "xiaodong",
+					"pop": 52,
+					"icon": "http://g1.ykimg.com/0130391F45541D2CE8C909001A84CE3DB55D10-BBA0-5296-1FAD-66E32A5493E2"
+				},
+				{
+					"watchable": true,
+					"name": "视频集锦",
+					"youku_id": "UNjI3NzA3NDEy",
+					"url": "http://i.youku.com/u/UNjI3NzA3NDEy/videos",
+					"detail": "2017-07-04",
+					"id": "jijin",
+					"pop": 26,
+					"icon": "http://g4.ykimg.com/0130391F455487D2C3AB1C095A8385B9286942-2377-251D-A70B-D55640925FF6"
+				},
+				{
+					"watchable": true,
+					"name": "Zs小西瓜",
+					"youku_id": "UNDU3NzQ3Mg",
+					"url": "http://i.youku.com/u/UNDU3NzQ3Mg/videos",
+					"detail": "2017-05-14",
+					"id": "zsxigua",
+					"pop": 36,
+					"icon": "http://t3.qlogo.cn/mbloghead/b7771430860f89395136/180"
+				},
+				{
+					"watchable": true,
+					"name": "夜魔解说",
+					"youku_id": "UNTg1MzY0OTY0",
+					"url": "http://i.youku.com/u/UNTg1MzY0OTY0/videos",
+					"detail": "2017-04-22",
+					"id": "yemo",
+					"pop": 11,
+					"icon": "http://g3.ykimg.com/0130391F4551491372E09D08B8FD79BC898473-F031-A1EA-A568-163DF06279EA"
+				},
+				{
+					"watchable": true,
+					"name": "LOL解说小杰",
+					"youku_id": "UMTgzMjQwODY4",
+					"url": "http://i.youku.com/u/UMTgzMjQwODY4/videos",
+					"detail": "2017-04-02",
+					"id": "xiaojie",
+					"pop": 34,
+					"icon": "http://tp3.sinaimg.cn/3262906414/180/40087589491/1"
+				},
+				{
+					"watchable": true,
+					"name": "冬阳",
+					"youku_id": "UNDE5MjgwMTc2",
+					"url": "http://i.youku.com/u/UNDE5MjgwMTc2/videos",
+					"detail": "2017-02-22",
+					"id": "dongyang",
+					"pop": 5,
+					"icon": "http://tp2.sinaimg.cn/2643379741/180/39996757365/0"
+				},
+				{
+					"watchable": true,
+					"name": "宇宙解说",
+					"youku_id": "UNTY0NDEyMDE2",
+					"url": "http://i.youku.com/u/UNTY0NDEyMDE2/videos",
+					"detail": "2017-01-24",
+					"id": "yuzhou",
+					"pop": 9,
+					"icon": "http://tp2.sinaimg.cn/2340144597/180/40072722734/1"
+				},
+				{
+					"watchable": true,
+					"name": "倒影解说",
+					"youku_id": "UMTM4NzE5NzkwOA",
+					"url": "http://i.youku.com/u/UMTM4NzE5NzkwOA/videos",
+					"detail": "2017-01-24",
+					"id": "daoying",
+					"pop": 15,
+					"icon": "http://g1.ykimg.com/0130391F4552E63284B3E414ABBD751AA82610-ECC6-9A1A-194C-9E09A609A72D"
+				},
+				{
+					"watchable": true,
+					"name": "LOL解说小胡",
+					"youku_id": "UMTM2MjgxNDE4OA",
+					"url": "http://i.youku.com/u/UMTM2MjgxNDE4OA/videos",
+					"detail": "2017-01-22",
+					"id": "xiaohu",
+					"pop": 8,
+					"icon": "https://r1.ykimg.com/0130391F48555D796E6D0F144EB93B60ECC996-3708-73E7-8887-8472DE7BEE21"
+				},
+				{
+					"watchable": true,
+					"name": "SMZ",
+					"youku_id": "UMzkyMjkzNTQ4",
+					"url": "http://i.youku.com/u/UMzkyMjkzNTQ4/videos",
+					"detail": "2017-01-16",
+					"id": "smz",
+					"pop": 8,
+					"icon": "http://tp2.sinaimg.cn/2100628841/180/40014818721/1"
+				},
+				{
+					"watchable": true,
+					"name": "solofeng",
+					"youku_id": "UMzIzNTYwNTM3Ng",
+					"url": "http://i.youku.com/u/UMzIzNTYwNTM3Ng/videos",
+					"detail": "2017-01-09",
+					"id": "solofeng",
+					"pop": 41,
+					"icon": "http://g3.ykimg.com/0130391F455612CDA2630A3036DAE0E535A5AC-1B33-C320-67A5-4B3069F0562B"
+				},
+				{
+					"watchable": true,
+					"name": "Zn幽魂解说",
+					"youku_id": "UMTM4MTAwMzQ2NA",
+					"url": "http://i.youku.com/u/UMTM4MTAwMzQ2NA/videos",
+					"detail": "2017-01-03",
+					"id": "znyouhun",
+					"pop": 35,
+					"icon": "http://tp3.sinaimg.cn/2453642610/180/40043810534/1"
+				},
+				{
+					"watchable": true,
+					"name": "lol球长",
+					"youku_id": "UMTM2ODc1MDI2MA",
+					"url": "http://i.youku.com/u/UMTM2ODc1MDI2MA/videos",
+					"detail": "2016-12-11",
+					"id": "qiuz",
+					"pop": 41,
+					"icon": "http://tva1.sinaimg.cn/crop.71.31.163.163.180/006zVHaPjw8f83ah39sprj309809v3yz.jpg"
+				},
+				{
+					"watchable": true,
+					"name": "大掌柜Boss",
+					"youku_id": "UMTM2MTc5MjUyMA",
+					"url": "http://i.youku.com/u/UMTM2MTc5MjUyMA/videos",
+					"detail": "2016-11-03",
+					"id": "dazhg",
+					"pop": 45,
+					"icon": "http://tp3.sinaimg.cn/1712149802/180/1279889742/0"
+				},
+				{
+					"watchable": true,
+					"name": "也好爱LOL",
+					"youku_id": "UMTY2NzU5MDk3Ng",
+					"url": "http://i.youku.com/u/UMTY2NzU5MDk3Ng/videos",
+					"detail": "2016-09-12",
+					"id": "yehao",
+					"pop": 17,
+					"icon": "http://g1.ykimg.com/0130391F4553E6E954800318D95AD0126B5665-522F-F02C-B35F-D8D997A3D986"
+				},
+				{
+					"watchable": true,
+					"name": "陈枫",
+					"youku_id": "UMjk4NzE3NTgwOA",
+					"url": "http://i.youku.com/u/UMjk4NzE3NTgwOA/videos",
+					"detail": "2016-08-31",
+					"id": "chenfeng",
+					"pop": 48,
+					"icon": "http://g3.ykimg.com/0130391F4556DF0962D9F72C832BE0DDB0DED7-5201-2B7A-21FB-42AC4B3C0948"
+				},
+				{
+					"watchable": true,
+					"name": "小飒",
+					"youku_id": "UMzc2NTY2MjM2",
+					"url": "http://i.youku.com/u/UMzc2NTY2MjM2/videos",
+					"detail": "2016-08-05",
+					"id": "dxf",
+					"pop": 6,
+					"icon": "http://tp1.sinaimg.cn/2845350992/180/40023113653/1"
+				},
+				{
+					"watchable": true,
+					"name": "亲一亲翔",
+					"youku_id": "UMTUyNzI3NTEy",
+					"url": "http://i.youku.com/u/UMTUyNzI3NTEy/videos",
+					"detail": "2016-08-03",
+					"id": "qyqx",
+					"pop": 20,
+					"icon": "http://tp1.sinaimg.cn/3213204464/180/40041442834/1"
+				},
+				{
+					"watchable": true,
+					"name": "魔哒蒂斯",
+					"youku_id": "UMTAwMDE0NjQ4",
+					"url": "http://i.youku.com/u/UMTAwMDE0NjQ4/videos",
+					"detail": "2016-07-24",
+					"id": "moda",
+					"pop": 7,
+					"icon": "http://g1.ykimg.com/0130391F484F0E4DE80163017D868E21A1D5C9-3272-65D1-9750-F6622111D196"
+				},
+				{
+					"watchable": true,
+					"name": "ESL楼主",
+					"youku_id": "UNDI0MTU2MDM2",
+					"url": "http://i.youku.com/u/UNDI0MTU2MDM2/videos",
+					"detail": "2016-07-02",
+					"id": "louzhu",
+					"pop": 8,
+					"icon": "http://t1.qlogo.cn/mbloghead/c26a1cee8150437b561a/180"
+				},
+				{
+					"watchable": true,
+					"name": "戴尔119",
+					"youku_id": "UMjc5ODc2OTcy",
+					"url": "http://i.youku.com/u/UMjc5ODc2OTcy/videos",
+					"detail": "2016-06-27",
+					"id": "dell",
+					"pop": 10,
+					"icon": "http://tp1.sinaimg.cn/2186049352/180/5731384583/0"
+				},
+				{
+					"watchable": true,
+					"name": "戚戚戚蓝尹",
+					"youku_id": "UMTMxNzE4MTA4OA",
+					"url": "http://i.youku.com/u/UMTMxNzE4MTA4OA/videos",
+					"detail": "2016-01-24",
+					"id": "qilanyi",
+					"pop": 40,
+					"icon": "http://tp2.sinaimg.cn/1901162013/180/5693821819/0"
+				},
+				{
+					"watchable": true,
+					"name": "思念",
+					"youku_id": "UMTU1Mjc1NzM5Ng",
+					"url": "http://i.youku.com/u/UMTU1Mjc1NzM5Ng/videos",
+					"detail": "2015-12-18",
+					"id": "sinian",
+					"pop": 20,
+					"icon": "http://tp2.sinaimg.cn/5170088617/180/5716828056/1"
+				},
+				{
+					"watchable": true,
+					"name": "冷小莫o",
+					"youku_id": "UNTk1MzM1OTE2",
+					"url": "http://i.youku.com/u/UNTk1MzM1OTE2/videos",
+					"detail": "2015-11-16",
+					"id": "lengxiaomo",
+					"pop": 5,
+					"icon": "http://tp3.sinaimg.cn/3435529654/180/40022702373/1"
+				},
+				{
+					"watchable": true,
+					"name": "君克解说",
+					"youku_id": "UMTQ3NjU0NTUzMg",
+					"url": "http://i.youku.com/u/UMTQ3NjU0NTUzMg/videos",
+					"detail": "2015-10-22",
+					"id": "junke",
+					"pop": 15,
+					"icon": "http://g1.ykimg.com/0130391F45544922E09977160092FFEFF36C15-DE68-0032-2782-283CEB4204n22"
+				},
+				{
+					"watchable": true,
+					"name": "PLU英雄联盟",
+					"youku_id": "UMzQxMjM4NjM2",
+					"url": "http://i.youku.com/u/UMzQxMjM4NjM2/videos",
+					"detail": "2015-09-29",
+					"id": "plu",
+					"pop": 22,
+					"icon": "http://g4.ykimg.com/0130391F4552B29EE3F2D00515B8DBC9F0A2A7-F967-1FB1-C5AE-8C4639479791"
+				},
+				{
+					"watchable": true,
+					"name": "上海马超",
+					"youku_id": "UNTQ0NTY0MTQ0",
+					"url": "http://i.youku.com/u/UNTQ0NTY0MTQ0/videos",
+					"detail": "2015-09-11",
+					"id": "shmachao",
+					"pop": 7,
+					"icon": "http://tp3.sinaimg.cn/2871621974/180/39997122947/1"
+				},
+				{
+					"watchable": true,
+					"name": "最强套路",
+					"youku_id": "UMzA5MDkzNzYyNA",
+					"url": "http://i.youku.com/u/UMzA5MDkzNzYyNA/videos",
+					"detail": "2015-08-11",
+					"id": "taolu",
+					"pop": 18,
+					"icon": "http://g2.ykimg.com/0130391F4555810C55DE6A2E0EFDC6DCF329CE-38F6-E0F0-34B6-A04E5D758E09"
+				},
+				{
+					"watchable": true,
+					"name": "苏丶小丶妍",
+					"youku_id": "UMzc3NzY4MDU2",
+					"url": "http://i.youku.com/u/UMzc3NzY4MDU2/videos",
+					"detail": "2015-05-27",
+					"id": "xiaoyan",
+					"pop": 12,
+					"icon": "http://tp3.sinaimg.cn/5043210086/180/5720011068/0"
+				},
+				{
+					"watchable": true,
+					"name": "L0L草莓丶",
+					"youku_id": "UMjcwNDQ5OTY4",
+					"url": "http://i.youku.com/u/UMjcwNDQ5OTY4/videos",
+					"detail": "2015-05-24",
+					"id": "caomei",
+					"pop": 6,
+					"icon": "http://g3.ykimg.com/0130391F455539EA16DFDF0407AF4C1E962E77-E2E0-A1C6-3DA2-608EA7B13248"
+				},
+				{
+					"watchable": true,
+					"name": "九毛",
+					"youku_id": "UMTY5ODM0NDE2",
+					"url": "http://i.youku.com/u/UMTY5ODM0NDE2/videos",
+					"detail": "2015-05-09",
+					"id": "jiumao",
+					"pop": 9,
+					"icon": "http://t3.qlogo.cn/mbloghead/84ece07631392947d822/180"
+				},
+				{
+					"watchable": true,
+					"name": "KuAn",
+					"youku_id": "UMTM3Nzk0NA",
+					"url": "http://i.youku.com/u/UMTM3Nzk0NA/videos",
+					"detail": "2015-05-03",
+					"id": "kuan",
+					"pop": 10,
+					"icon": "http://tp4.sinaimg.cn/2004197763/180/1299463442/1"
+				},
+				{
+					"watchable": true,
+					"name": "浩逗苹果妞",
+					"youku_id": "UMTMyMTYyNjY1Ng",
+					"url": "http://i.youku.com/u/UMTMyMTYyNjY1Ng/videos",
+					"detail": "2015-04-22",
+					"id": "haodou",
+					"pop": 16,
+					"icon": "http://t0.qlogo.cn/mbloghead/4bbf4a593042bab4ec0a/180"
+				},
+				{
+					"watchable": true,
+					"name": "white解说",
+					"youku_id": "UMTM5Mzk3NTMyMA",
+					"url": "http://i.youku.com/u/UMTM5Mzk3NTMyMA/videos",
+					"detail": "2015-01-04",
+					"id": "white",
+					"pop": 18,
+					"icon": "http://g2.ykimg.com/0130391F4552E74F15ABA414C598062DC6BD29-E773-E6DA-2F90-770619965169"
+				},
+				{
+					"watchable": true,
+					"name": "海王Seaking",
+					"youku_id": "UNTM3MzQ1NTc2",
+					"url": "http://i.youku.com/u/UNTM3MzQ1NTc2/videos",
+					"detail": "2014-11-29",
+					"id": "seaking",
+					"pop": 20,
+					"icon": "http://t3.qlogo.cn/mbloghead/9f6b125e793b9f30ca1a/180"
+				}
+			]
+
+		};
+		var ve = new Vue({
+			el: "#wrap",
+			data: {
+				msgs: msg
+			},
+			methods: {
+				del(i){
+					this.msgs.authors.splice(i,1);
+				}
+			}
+		});
+	</script>
+</html>

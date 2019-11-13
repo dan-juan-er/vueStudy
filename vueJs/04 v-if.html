@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<style type="text/css">
+			.C {
+				width: 300px;
+				height: 300px;
+				background-color: blue;
+				font-size: 50px;
+				color: white;
+				line-height: 300px;
+				text-align: center;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="app">
+			<button @mouseover="page = 1">男装</button>
+			<button @mouseover="page = 2">女装</button>
+			<button @mouseover="page = 3">童装</button>
+			<button @mouseover="page = 4">美食</button>
+			<div v-if="page == 1" class="C">男装</div>
+			<div v-else-if="page == 2" class="C">女装</div>
+			<div v-else-if="page == 3" class="C">童装</div>
+			<div v-else-if="page == 4" class="C">美食</div>
+			<hr >
+			
+		</div>
+	</body>
+	<script src="js/vue.min.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+		var ve = new Vue({
+			el:"#app",
+			data:{
+				page:1
+			}
+		});
+	</script>
+</html>

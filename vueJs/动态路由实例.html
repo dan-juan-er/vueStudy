@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script src="js/vue.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/vue-router.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+	<body>
+		<div id="app">
+			<div>
+				<!-- 第一种方式：path路径跳转 -->
+				<!-- <router-link to="/home">小说首页</router-link> -->
+				<!-- 第二种方式:命名式路由跳转 -->
+				<!-- <router-link :to="{name:'home'}">小说首页</router-link> -->
+				<router-link :to="homeObj">小说首页</router-link>
+				-------------
+				<router-link to="/article">小说列表</router-link>
+				<!-- 或者 -->
+				<!-- <router-link :to="articleD">小说列表</router-link> -->
+				
+			</div>
+			<!-- 路由出口	 -->
+			<router-view></router-view>
+		</div>
+	</body>
+	<!-- 自定义动态组件 -->
+	<script type="text/x-template" id="home">
+		<div>
+			<h2>小说首页加载完成</h2>
+			<ul>
+				<li>首页模块1</li>
+				<li>首页模块2</li>
+				<li>首页模块3</li>
+				<li>首页模块4</li>
+				<li>首页模块5</li>
+			</ul>
+		</div>
+	</script>
+	<!-- 小说列表 -->
+	<script type="text/x-template" id="article">
+		<div>
+			<h2>小说列表页</h2>
+			<ul>
+				<li v-for="(v,i) in articles">
+					<!-- /artDetail/5?titl=zx&&con=lll -->
+					<!-- path跳转：<router-link :to="'/artDetail/'+v.id">{{v.title}}</router-link> -->
+					path跳转：<router-link :to="'/artDetail/'+v.id+'?title='+v.title+'&con='+v.content">{{v.title}}</router-link>
+					-------------
+					命名式跳转：<router-link :to="{name:'art',params:{artId:v.id}}">{{v.title}}</router-link>
+				</li>
+			</ul>
+		</div>
+	</script>
+	<!-- 小说详情 -->
+	<script type="text/x-template" id="artdetail">
+		<div v-if="show">
+			<h1>{{artObj.title}}</h1>
+			<p>{{artObj.content}}</p>
+		</div>
+	</script>
+	<script type="text/javascript">
+		//模拟后台返回的数据为
+			var dataArr = [
+			{
+			   id:1,
+			   title:"天龙八部",
+			   content:"北宋年间，外族纷纷觊觎大宋国土，形成汉、辽对立的局面。丐帮帮主乔峰（胡军饰）因拒绝副帮主妻康敏（钟丽缇饰）之爱遭报复指为契丹人后裔而受尽中原武林人士唾弃。乔峰为平反遂四出追查身世，期间认识了大理世子段誉（林志颖饰）及虚竹和尚（高虎饰），并结拜为兄弟。乔峰追寻身世时屡遭奸人所害，含冤莫白，更错杀红颜知己阿朱（刘涛饰），后为救朱妹阿紫（陈好饰）寻医至大辽，辗转成为大辽国南院大王，但与中原关系则更趋恶劣。段誉为人豁达开朗，对貌若天仙的王语嫣（刘亦菲饰）一见倾心，可惜语嫣只钟情其表哥慕容复（修庆饰），令三人陷入一段纠缠不清的苦恋。虚竹天性纯良，宅心仁厚，深得高人指点，武功高强，后被选为西夏驸马。乔峰、段誉和虚竹在异域拥有着举足轻重的地位，在汉辽相争的时势下，各种江湖及情感上的恩恩怨怨正等着他们去面对   。"
+			},
+			{
+				id:2,
+				title:"金瓶梅",
+				content:"它借《水浒传》中武松杀嫂一段故事为引子，通过对兼有官僚、恶霸、富商三种身份的市侩势力的代表人物西门庆及其家庭罪恶生活的描述，体现当时民间生活的面貌。描绘了一个上至朝廷内擅权专政的太师，下至地方官僚恶霸乃至市井间的地痞、流氓、宦官、帮闲所构成的鬼蜮世界。西门庆原是个破落财主、生药铺老板。他善于夤缘钻营，巴结权贵，在县里包揽讼事，交通官吏，知县知府都和他往来。他不择手段地巧取豪夺，聚敛财富，荒淫好色，无恶不作。他抢夺寡妇财产，诱骗结义兄弟的妻子，霸占民间少女，谋杀姘妇的丈夫。为了满足贪得无厌的享乐欲望，他干尽伤天害理的事情。但由于有官府做靠山，特别是攀结上了当朝宰相蔡京并拜其为义父，这就使他不仅没有遭到应有的惩罚，而且左右逢源，步步高升。"
+			},
+			{
+				id:3,
+				title:"羊来",
+				content:"就在此刻，一种不可思议的感觉令我悚然，仿佛是宿命，仿佛是死亡的光追上了那个要离开这个世界的生物。我有种芒刺在背的灼痛。那些轻微的撞击一下就使我停下了手中的刀。我回过头，我看见那只脏羊挣脱了绳索，它静静地站在我家窑前的水井边。一双柔和细媚的眼闪着温良和善的光，宁静地看着我，看着我手中的刀、身旁的铁锅和火苗。那双巨大的弯角曲着圈儿，上面全是沟壑，细细的毛绒上黑秽遍布。它肯定站在我的身后许久了。"
+			}
+			];
+			
+			// 自定义组件 -- 小说首页 Home
+			const Home = {
+				template:`#home`
+			};
+			//小说列表页
+			const Article = {
+				template:`#article`,
+				data(){
+					return{
+						articles:dataArr,
+					}
+				}
+			};
+			// 小说详情 ---ArtDetail
+			const ArtDetail = {
+				template:`#artdetail`,
+				data(){
+					return{
+						artObj:null,
+						show:false
+					}
+				},
+				created(){
+					console.log("ArtDetail组件创建完成！");
+					//params接收路由跳转时,url路径中的信息
+					console.log(this.$route.params.artId);
+					//query接收路由跳转时,传递的参数信息
+					console.log(this.$route.query);
+					
+					// 接收路由传过来的数据
+					this.artObj = dataArr[this.$route.params.artId-1];
+					
+				},
+				mounted(){
+					this.show = true;
+				}
+			}
+			
+			//配置路由信息
+			const rs = [
+				{
+					//第一种方式:通过path路径跳转
+					path:"/home",
+					// 第二种方式:通过命名式路由跳转
+					name:"home",
+					component:Home
+				},
+				{
+					path:"/article",
+					name:"article",
+					component:Article
+				},
+				{
+					path:"/artDetail/:artId",
+					name:"art",
+					component:ArtDetail
+				}
+			];
+			// 创建一个路由实例对象
+			const router = new VueRouter({
+				routes:rs
+			});
+			
+			var ve = new Vue({
+				router,
+				el:"#app",
+				data:{
+					homeObj:{
+						name:"home"
+					},
+					articleD:"/article"
+				},
+				methods:{
+					
+				},
+				components:{
+					
+				}
+			});
+			
+	</script>
+</html>

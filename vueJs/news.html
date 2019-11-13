@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<style type="text/css">
+			ul {
+				list-style-type: none;
+			}
+
+			#index {
+				background-color: #F5DEB3;
+			}
+
+			#list1,
+			#list2,
+			#list3,
+			#list4 {
+				border: 1px solid black;
+				width: 300px;
+				height: 120px;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="app">
+			<button>首页</button>
+			<button>详情页</button>
+			<app></app>
+
+		</div>
+	</body>
+	<script src="js/vue.min.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+		var title = ["印度一建筑物倒塌", "无锡钢材运费暴涨", "白城一办公楼倒塌", "黔西牛肉粉集体涨价"];
+		var list = ["印度一建筑物因煤气罐爆炸倒塌造成至少10人死亡", "无锡高架侧翻后多地严查超载钢贸物流价格暴涨", "吉林白城一银行办公楼坍塌致1死4伤，仍有4人被困", "黔西生肉粉集体涨价串通系违法市场监管出手制止"];
+		var count = [2, 6, 4, 8];
+		Vue.component("index", {
+			props: ["title_val", "num"],
+			template: `<ul id="index">
+				<li v-for="(v,i) in title_val">{{v}}</li>
+			</ul>`
+		});
+
+		Vue.component("info", {
+			props: ["info_val"],
+			template: `<div>
+			<div id="con" v-for="(v,i) in info_val">
+			{{v}}
+			<button>点评</button>
+			</div>
+			</div>
+			`
+		});
+		Vue.component("list1", {
+			template: `<div id="list1"> 
+			<button>返回</button>
+			<p>印度一建筑物因煤气罐爆炸倒塌造成至少10人死亡</p>
+			<button>点评</button>
+			</div>
+			`
+		});
+		Vue.component("list2", {
+			template: `<div id="list2"> 
+			<button>返回</button>
+			<p>无锡高架侧翻后多地严查超载钢贸物流价格暴涨</p>
+			<button>点评</button>
+			</div>
+			`
+		});
+		Vue.component("list3", {
+			template: `<div id="list3"> 
+			<button>返回</button>
+			<p>吉林白城一银行办公楼坍塌致1死4伤，仍有4人被困</p>
+			<button>点评</button>
+			</div>
+			`
+		});
+		Vue.component("list4", {
+			template: `<div id="list4"> 
+			<button>返回</button>
+			<p>黔西生肉粉集体涨价串通系违法市场监管出手制止</p>
+			<button>点评</button>
+			</div>
+			`
+		});
+		Vue.component("app", {
+			template: `<div>
+			
+			<button @click="show = 'list1'">list1</button>
+			<button @click="show = 'list2'">list2</button>
+			<button @click="show = 'list3'">list3</button>
+			<button @click="show = 'list4'">list4</button>
+			<list1 v-if="show == 'list1'"></list1>
+			<list2 v-else-if="show == 'list2'"></list2>
+			<list3 v-else-if="show == 'list3'"></list3>
+			<list4 v-else-if="show == 'list4'"></list4>
+			</div>`,
+			data:function(){
+				return {
+					show:"list1"
+					}
+			}
+		});
+		var ve = new Vue({
+			el: "#app",
+			data: {
+				titleArr: title,
+				listArr: list,
+				countArr: count
+			},
+			methods: {
+
+			},
+
+		});
+	</script>
+</html>

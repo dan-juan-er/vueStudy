@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<body>
+	</body>
+	<script type="text/javascript">
+		//es6中的展开属性 ... 
+		var arr1 = [90,34,23];
+		var arr2 = [56,32,55];
+		var arr3 = [89,33,...["hello","hi"],... arr1];
+		console.log(arr3);
+		var obj = {
+			hobby:"钓鱼",
+			age:18,
+			name:"弓虽"
+		};
+		var obj2 = {
+			wa:'song',
+			...
+			obj
+		}
+		console.log(obj2);
+	</script>
+</html>

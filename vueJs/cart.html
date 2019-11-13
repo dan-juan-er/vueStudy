@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<body>
+		<div id="cart">
+			<table border="1" cellspacing="0" cellpadding="0">
+				<tr>
+					<th>序号</th>
+					<th>商品名称</th>
+					<th>商品价格</th>
+					<th>商品数量</th>
+					<th>总价</th>
+					<th>编辑</th>
+				</tr>
+				<tr v-for="(v,i) in col">
+					<td v-text="v.id"></td>
+					<td v-text="v.name"></td>
+					<td v-text="v.price"></td>
+					<td>
+						<button @click="add(i)">+</button>
+						<span v-text="v.num"></span>
+						<button @click="dece(i)">-</button>
+					</td>
+					<td  v-text="AllPriceFn(i)"></td>
+					<td><button @click="dele(i)">删除</button></td>
+				</tr>
+
+			</table>
+			<p>总价为：</p><span v-text="AllFn"></span>
+		</div>
+	</body>
+	<script src="js/vue.min.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+		var all = 0;
+		var detail = {
+			data: [{
+					"id": 1,
+					name: "球鞋",
+					price: 3999,
+					num: 1,
+					allprice: 3999,
+				},
+				{
+					"id": 2,
+					name: "手机",
+					price: 5999,
+					num: 1,
+					allprice: 5999,
+				},
+				{
+					"id": 3,
+					name: "钢丝球",
+					price: 2,
+					num: 1,
+					allprice: 2,
+				},
+				{
+					"id": 4,
+					name: "肾机",
+					price: 6999,
+					num: 1,
+					allprice: 6999,
+				},
+				{
+					"id": 5,
+					name: "女装",
+					price: 999,
+					num: 1,
+					allprice: 999,
+				}
+			]
+		};
+		var ve = new Vue({
+			el: "#cart",
+			data: {
+				col: detail.data
+			},
+			methods: {
+				add(i){
+					++this.$data.col[i].num;
+				},
+				dece(i){
+					--this.$data.col[i].num;
+					if (this.$data.col[i].num <= 0) {
+						this.$data.col[i].num = 0;
+					}
+				},
+				dele(i){
+					this.col.splice(i,1);
+				},
+				AllPriceFn:function (i){
+					
+					this.col[i].allprice = this.col[i].num * this.col[i].price;
+					return this.col[i].num * this.col[i].price;
+				}
+			},
+			computed: {
+				AllFn:function(){
+					console.log(this.col)
+					all = 0;
+					for (var i = 0;i < this.col.length;i++) {
+						all += this.col[i].allprice;
+					}
+					return all;
+				}
+			},
+		});
+	</script>
+</html>

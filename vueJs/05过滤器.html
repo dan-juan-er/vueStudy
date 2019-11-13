@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<body>
+		<div id="app">
+			<p v-text="msg"></p>
+			<p v-text="changeMsg()"></p>
+			<p>{{msg|getStr}}</p>
+			<p>{{"文"|getData(a,b)}}</p>
+		</div>
+	</body>
+	<script src="js/vue.min.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+		var ve = new Vue({
+			el: "#app",
+			data: {
+				msg: "hello",
+				a:"弓",
+				b:"虽"
+			},
+			methods: {
+				changeMsg() {
+					this.msg = "hi";
+					return this.msg;
+				}
+			},
+			filters: {
+				getStr: function(v) {
+					v += "你好";
+					return v;
+				},
+				getData(v, a, b) {
+					return v + a + b;
+				}
+			}
+		});
+	</script>
+</html>

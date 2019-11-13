@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<style type="text/css">
+			.one {
+				color: red;
+				font-size: 50px;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="app">
+			<!-- {{}} 指令，能够识别数据源中的数据（可以访问vue中的指令）-- 输出对象的属性以及函数的返回值 -->
+			<p>{{msg}}</p>
+			<p>msg</p>
+			<p>{{getA()}}</p>
+			<p>{{getB("文弓虽！")}}</p>
+			<p>{{random(10,30)}}</p>
+			<!-- vue.js提供了完全的JavaScript表达式支持 -->
+			<p>5+9</p>
+			<p>{{5+9}}</p>
+			<p>5>9</p>
+			<p>{{5>9}}</p>
+			<p>{{OK ? "文强" : "文弓虽"}}</p>
+			<p>{{'OK' ? "文强" : "文弓虽"}}</p>
+			<!--vue指令：把vue实例中的属性绘制渲染到元素标签中
+			 v-text 指令 ：绘制文本，类似于原生JS中的inner Text-->
+			<p v-text="age"></p>
+			<p v-text="getA()"></p>
+			<p v-text="'age'"></p>
+			<p v-text="'age'+age"></p>
+			<p v-text="baidu"></p>
+			<!-- v-html指令：可以绘制文本，元素，以及注释节点 -->
+			<p v-html="'bai'"></p>
+			<p v-html="baidu"></p>
+			<p v-html="age+'9999'"></p>
+			<!-- vue中的属性绑定指令 v-bind -->
+			<!-- v-bind:属性名 -->
+			<input type="text" v-bind:value="user" />
+			<input type="text" v-bind:value="random(20,30)" />
+			<p class="one">文弓虽</p>
+			<p v-bind:class="a">文强</p>
+			<!-- v-bind:属性名 可简写为 :属性名-->
+			<!-- v-model双向数据绑定 理解：输入框绑定了数据源msg的值，同时，msg数据源绑定了输入框的值，所以，当输入框的内容发生变化时，使用过该数据源msg的地方，就会重新渲染 -->
+			<input type="text" v-model="msg" :value="msg" />
+			<!-- 事件绑定指令：v-on:事件名 -->
+			<!-- 简写方式 @事件名 -->
+			<p :class="a" v-on:click="clickFn()">Boy</p>
+			<button type="button" @click="changeT">选择</button>
+			<input type="checkbox" :checked="isT" />
+			<!-- v-for指令 遍历数组或者对象，同时创建DOM元素节点 -->
+			<ul>
+				<li v-for="(v,i) in arrType">
+					{{v}}----{{i}}
+					<button type="button" @click="rem(i)">删除</button>
+				</li>
+			</ul>
+			<button type="button" @click="add()">增加</button>
+			<button type="button" @click="del()">删除</button>
+		</div>
+		<div id="two">
+			<p>{{msg}}</p>
+
+		</div>
+	</body>
+	<script src="js/vue.min.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+		// 创建一个vue实例对象;
+		// 实例中的el属性指定布局中的id,以id对应的标签内部的所有元素都可以被该实例控制,超出则失效;
+		//data属性 vue中用来提供数据源的;
+		//methods 属性 为vue对象设置函数的
+		var ve = new Vue({
+			el: "#app",
+			data: {
+				msg: "文弓虽",
+				OK: 0,
+				age: 6,
+				baidu: "<a href='https://www.baidu.com'>百度</a>",
+				user: "文弓虽",
+				a: "one",
+				isT: false,
+				arrType: ["体育", "娱乐", "科技", "新闻", "影视"]
+			},
+			methods: {
+				// function getA(){
+				// 	
+				// }
+				getA: function() {
+					return "特价文弓虽9.99元/斤";
+				},
+				// 或者 另一种
+				getB(a) {
+					return "hello" + a;
+				},
+				random(m, n) {
+					return Math.floor(Math.random() * (n - m + 1));
+				},
+				clickFn() {
+					document.body.style.backgroundColor = "beige";
+					this.msg = "girl"
+				},
+				changeT() {
+					this.isT = !this.isT;
+				},
+				add() {
+					this.arrType.push("NBA");
+
+				},
+				del() {
+					this.arrType.pop();
+				},
+				rem(i) {
+					alert(i);
+				}
+			}
+		}); //{}里传对象
+	</script>
+</html>
